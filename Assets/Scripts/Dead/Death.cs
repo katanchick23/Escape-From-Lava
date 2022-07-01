@@ -9,6 +9,7 @@ public class Death : MonoBehaviour
     public Movement moveScript;
     public GameObject Lose;
     public MovingLava lavaScript;
+    public StartPanelScript PanelScript;
 
     void Start(){
         animator.SetBool("Dead", false);
@@ -16,15 +17,15 @@ public class Death : MonoBehaviour
     }
     void OnTriggerEnter(Collider other){
         if(other.tag == "Player"){
+            moveScript.enabled = false;
+            PanelScript.enabled = false;
             StartCoroutine(ExampleCoroutine());
             IEnumerator ExampleCoroutine()
             {   
-                moveScript.enabled = false;
                 animator.SetBool("Dead", true);
                 yield return new WaitForSeconds(2);
                 lavaScript.enabled = false;
                 Lose.SetActive(true);
-                // SceneManager.LoadScene("Game");
             }
         }
     }
